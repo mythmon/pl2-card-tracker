@@ -5,5 +5,11 @@
       "config/**/*.js",
       "node_modules/**/*.ts"
     ]
+  },
+  "rules": {
+    "no-empty": false,
+    "no-empty-interface": false,
+    "member-ordering": false,
+    "no-console": false
   }
 }
