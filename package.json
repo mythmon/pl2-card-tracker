@@ -2,9 +2,12 @@
   "name": "pl2-card-tracker",
   "version": "0.1.0",
   "private": true,
+  "repository": "https://github.com/mythmon/pl2-card-tracker",
+  "homepage": "https://mythmon.github.io/pl2-card-tracker",
   "dependencies": {
     "@types/react-redux": "^6.0.3",
     "core-decorators": "^0.20.0",
+    "gh-pages": "^1.2.0",
     "immutable": "^3.8.2",
     "jest-immutable-matchers": "^2.0.1",
     "react": "^16.4.1",
@@ -19,7 +22,9 @@
     "start": "react-scripts-ts start",
     "build": "react-scripts-ts build",
     "test": "react-scripts-ts test --env=jsdom",
-    "eject": "react-scripts-ts eject"
+    "eject": "react-scripts-ts eject",
+    "predeploy": "yarn build",
+    "deploy": "gh-pages -d build"
   },
   "devDependencies": {
     "@types/jest": "^23.1.3",
