@@ -5,7 +5,9 @@ import { Dispatch } from 'redux';
 
 import { TAction } from '../state/actions';
 import { City } from '../state/cities/reducer'
+import * as citiesSelectors from '../state/cities/selectors';
 import * as infectionActions from '../state/infection/actions';
+import * as infectionSelectors from '../state/infection/selectors';
 import { IState } from '../state/reducer';
 import { connect } from '../utils';
 import Tally from './Tally';
@@ -20,6 +22,8 @@ interface IStateProps {
     cities: OrderedSet<City>,
     phase: number,
     infectionCounts: Map<string, List<number>>,
+    citiesEpidemicEnabled: Map<string, boolean>,
+    citiesInfectionEnabled: Map<string, boolean>,
 }
 
 // Props from mapDispatchToProps
@@ -34,9 +38,11 @@ interface IProps extends IStateProps, IDispatchProps, IOwnProps { };
 class InfectionTable extends React.Component<IProps> {
     public static mapStateToProps(state: IState): IStateProps {
         return {
-            cities: state.cities.sort() as OrderedSet<City>,
-            infectionCounts: state.infections.counts,
-            phase: state.infections.phase,
+            cities: citiesSelectors.sorted(state),
+            citiesEpidemicEnabled: infectionSelectors.cityEpidemicEnabled(state),
+            citiesInfectionEnabled: infectionSelectors.cityInfectionEnabled(state),
+            infectionCounts: infectionSelectors.counts(state),
+            phase: infectionSelectors.phase(state),
         }
     }
 
@@ -51,7 +57,7 @@ class InfectionTable extends React.Component<IProps> {
         const { infectCity } = this.props;
         const target = ev.target as HTMLButtonElement;
         if (!target.dataset.city) {
-            console.warn("handleInfect target has no dataset.city", target);
+            throw new Error("handleInfect target has no dataset.city");
             return;
         }
         infectCity(target.dataset.city);
@@ -61,14 +67,14 @@ class InfectionTable extends React.Component<IProps> {
         const { epidemicInCity } = this.props;
         const target = ev.target as HTMLButtonElement;
         if (!target.dataset.city) {
-            console.warn("handleEpidemic target has no dataset.city", target);
+            throw new Error("handleEpidemic target has no dataset.city");
             return;
         }
         epidemicInCity(target.dataset.city);
     }
 
     public render() {
-        const { cities, infectionCounts, phase } = this.props;
+        const { cities, infectionCounts, phase, citiesInfectionEnabled, citiesEpidemicEnabled } = this.props;
 
         const phases = [];
         for (let i = 0; i <= phase; i++) {
@@ -81,7 +87,14 @@ class InfectionTable extends React.Component<IProps> {
                     <thead>
                         <tr>
                             <th className="city">City</th>
-                            {phases.map(p => <th key={p} className="count">{p}</th>)}
+                            {phases.map(p => <th key={p} className="count">
+                                {p === 0
+                                    ? "Unseen"
+                                    : p === phase
+                                        ? "Discard"
+                                        : p
+                                }
+                            </th>)}
                         </tr>
                     </thead>
                     <tbody>
@@ -89,18 +102,31 @@ class InfectionTable extends React.Component<IProps> {
                             <tr key={name}>
                                 <th className="city">
                                     {name}
-                                    <button data-city={name} onClick={this.handleInfect}>Infect</button>
-                                    <button data-city={name} onClick={this.handleEpidemic}>Epidemic</button>
+                                    <button
+                                        data-city={name}
+                                        onClick={this.handleInfect}
+                                        disabled={!citiesInfectionEnabled.get(name)}
+                                    >
+                                        Infect
+                                    </button>
+                                    <button
+                                        data-city={name}
+                                        onClick={this.handleEpidemic}
+                                        disabled={!citiesEpidemicEnabled.get(name)}
+                                    >
+                                        Epidemic
+                                    </button>
                                 </th>
-                                {infectionCounts.get(name, List<number>())
+                                {
+                                infectionCounts.get(name, List<number>())
                                     .map((cardsLeft: number, i: number) => (
                                         <td key={i} className="count">
                                             <Tally count={cardsLeft} />
                                         </td>
                                     ))
-                                }
+                            }
                             </tr>
-                        ))}
+                    ))}
                     </tbody>
                 </table>
             </div>

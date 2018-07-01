@@ -65,14 +65,11 @@ export default function reducer(state: IInfectionsState = defaultState, action: 
                 ...state,
                 counts: (state.counts.map((counts: List<number>, cn) => {
                     if (cn === cityName) {
-                        counts = counts.push(1).update(0, n => n - 1);
+                        const drawPhase = counts.findIndex((n: number) => n > 0);
+                        return counts.push(1).update(drawPhase, n => n - 1);
                     } else {
-                        counts = counts.push(0);
+                        return counts.push(0);
                     }
-                    // if (counts.size !== state.phase - 1) {
-                    //     throw new Error(`Unexpected number of infection count cells for city "${cn}": ${counts.size}`);
-                    // }
-                    return counts;
                 }) as Map<string, List<number>>),
                 phase: state.phase + 1,
             };
