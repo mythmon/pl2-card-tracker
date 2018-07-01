@@ -79,10 +79,11 @@ class InfectionTable extends React.Component<IProps> {
     public render() {
         const { cities, infectionCounts, phase, citiesInfectionEnabled, citiesEpidemicEnabled } = this.props;
 
-        const phases = [];
-        for (let i = 0; i <= phase; i++) {
-            phases.push(i);
+        const phases = ["Unseen"];
+        for (let i = 1; i < phase; i++) {
+            phases.push(`${i}`);
         }
+        phases.push("Discard")
 
         return (
             <div className="InfectionTable">
@@ -90,14 +91,7 @@ class InfectionTable extends React.Component<IProps> {
                     <thead>
                         <tr>
                             <th className="city">City</th>
-                            {phases.map(p => <th key={p} className="count">
-                                {p === 0
-                                    ? "Unseen"
-                                    : p === phase
-                                        ? "Discard"
-                                        : p
-                                }
-                            </th>)}
+                            {phases.map(p => <th key={p} className="count">{p}</th>)}
                         </tr>
                     </thead>
                     <tbody>
