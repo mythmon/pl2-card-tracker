@@ -66,10 +66,11 @@ export default function reducer(state: IInfectionsState = defaultState, action: 
                 counts: (state.counts.map((counts: List<number>, cn) => {
                     if (cn === cityName) {
                         const drawPhase = counts.findIndex((n: number) => n > 0);
-                        return counts.push(1).update(drawPhase, n => n - 1);
-                    } else {
-                        return counts.push(0);
+                        counts = counts
+                            .update(drawPhase, n => n - 1)  // draw from the bottom
+                            .update(counts.size - 1, n => n + 1);  // and include in the shuffle
                     }
+                    return counts.push(0);
                 }) as Map<string, List<number>>),
                 phase: state.phase + 1,
             };

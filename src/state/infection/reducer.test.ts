@@ -30,7 +30,16 @@ describe('cities reducer', () => {
         state = reducer(state, { type: 'INFECTION_ADD', cityName: 'Portland' });
         state = reducer(state, { type: 'INFECTION_EPIDEMIC', cityName: 'Portland' });
 
-        expect(state.counts).toEqualImmutable(Map({ Portland: List([0, 2, 1]) }));
+        expect(state.counts).toEqualImmutable(Map({ Portland: List([0, 3, 0]) }));
+    });
 
+    test("epidemic should go in the top stack", () => {
+        let state: IInfectionsState = reducer(undefined, initialAction);
+        state = reducer(state, { type: 'CITY_ADD', name: 'Portland' });
+        expect(state.counts).toEqualImmutable(Map({ Portland: List([3, 0]) }));
+        state = reducer(state, { type: 'INFECTION_ADD', cityName: 'Portland' });
+        expect(state.counts).toEqualImmutable(Map({ Portland: List([2, 1]) }));
+        state = reducer(state, { type: 'INFECTION_EPIDEMIC', cityName: 'Portland' });
+        expect(state.counts).toEqualImmutable(Map({ Portland: List([1, 2, 0]) }));
     });
 });
