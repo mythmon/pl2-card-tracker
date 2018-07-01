@@ -8,6 +8,7 @@ import { City } from '../state/cities/reducer'
 import * as infectionActions from '../state/infection/actions';
 import { IState } from '../state/reducer';
 import { connect } from '../utils';
+import Tally from './Tally';
 
 import './InfectionTable.css';
 
@@ -79,20 +80,25 @@ class InfectionTable extends React.Component<IProps> {
                 <table>
                     <thead>
                         <tr>
-                            <th>City</th>
-                            {phases.map(p => <th key={p}>{p}</th>)}
+                            <th className="city">City</th>
+                            {phases.map(p => <th key={p} className="count">{p}</th>)}
                         </tr>
                     </thead>
                     <tbody>
                         {cities.map(({ name }: City) => (
                             <tr key={name}>
-                                <th>
+                                <th className="city">
                                     {name}
                                     <button data-city={name} onClick={this.handleInfect}>Infect</button>
                                     <button data-city={name} onClick={this.handleEpidemic}>Epidemic</button>
                                 </th>
                                 {infectionCounts.get(name, List<number>())
-                                    .map((cardsLeft, i) => <td key={i}>{cardsLeft}</td>)}
+                                    .map((cardsLeft: number, i: number) => (
+                                        <td key={i} className="count">
+                                            <Tally count={cardsLeft} />
+                                        </td>
+                                    ))
+                                }
                             </tr>
                         ))}
                     </tbody>

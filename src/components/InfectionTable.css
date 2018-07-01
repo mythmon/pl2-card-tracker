@@ -1,16 +1,35 @@
-.InfectionTable table {
-  border-collapse: collapse;
+.InfectionTable {
+  --border-color: #ccc;
 }
 
-.InfectionTable thead,
-.InfectionTable tbody {
-    margin: 0;
-    padding: 0;
+.InfectionTable table {
+  border-collapse: collapse;
+  border: 1px solid var(--border-color);
+}
+
+.InfectionTable thead {
+  border-bottom: 1px solid var(--border-color);
 }
 
 .InfectionTable td,
 .InfectionTable th {
-  border: 1px solid #000000;
-  padding: 1em;
+  padding: 10px;
   margin: 0;
+}
+
+.InfectionTable tr > *:not(:first-child) {
+  border-left: 1px solid var(--border-color);
+}
+
+.InfectionTable tr:nth-child(2n) {
+  background: #f0f0f0;
+}
+
+.InfectionTable .city {
+  text-align: left;
+}
+
+.InfectionTable .count {
+  text-align: center;
+  min-width: 30px;
 }
