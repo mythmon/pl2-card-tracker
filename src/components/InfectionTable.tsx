@@ -3,6 +3,9 @@ import { List, Map, OrderedSet } from 'immutable'
 import * as React from 'react';
 import { Dispatch } from 'redux';
 
+import { FaBug } from 'react-icons/lib/fa';
+import { IoNuclear } from 'react-icons/lib/io';
+
 import { TAction } from '../state/actions';
 import { City } from '../state/cities/reducer'
 import * as citiesSelectors from '../state/cities/selectors';
@@ -101,20 +104,24 @@ class InfectionTable extends React.Component<IProps> {
                         {cities.map(({ name }: City) => (
                             <tr key={name}>
                                 <th className="city">
-                                    {name}
+                                    <span className="name">{name}</span>
                                     <button
+                                        className="action-btn infect" 
                                         data-city={name}
-                                        onClick={this.handleInfect}
+                                        onClick={this.handleInfect} 
                                         disabled={!citiesInfectionEnabled.get(name)}
+                                        title="Infect"
                                     >
-                                        Infect
+                                        <FaBug />
                                     </button>
-                                    <button
-                                        data-city={name}
-                                        onClick={this.handleEpidemic}
+                                    <button 
+                                        className="action-btn epidemic" 
+                                        data-city={name} 
+                                        onClick={this.handleEpidemic} 
                                         disabled={!citiesEpidemicEnabled.get(name)}
+                                        title="Epidemic"
                                     >
-                                        Epidemic
+                                        <IoNuclear />
                                     </button>
                                 </th>
                                 {

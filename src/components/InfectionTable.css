@@ -33,3 +33,58 @@
   text-align: center;
   min-width: 30px;
 }
+
+.InfectionTable th.city {
+  min-width: 200px;
+  display: flex;
+  line-height: 1.4em;
+}
+
+.InfectionTable th.city .name {
+  flex: 1 1 100%;
+}
+
+.action-btn {
+  border: none;
+  background: none;
+  font-size: 1.2em;
+  cursor: pointer;
+}
+ 
+.action-btn:disabled > *  {
+  opacity: 0.3;
+  position: relative;
+}
+
+.action-btn:disabled:hover   {
+  cursor: not-allowed;
+}
+
+.action-btn:disabled::after {
+  border-top: 1px solid black;
+  content: "";
+  display: block;
+  height: 0px;
+  position: absolute;
+  width: 24px;
+  transform: translate(-4px, -10px) rotate(-45deg);
+  transform-origin: center;
+  opacity: 1.0;
+}
+
+
+.action-btn.infect {
+  color: #080;;
+}
+
+.action-btn.epidemic {
+  color: #800;
+}
+
+.action-btn.infect:hover:not(:disabled) {
+  color: #0f0;
+}
+
+.action-btn.epidemic:hover:not(:disabled) {
+  color: #f00;
+}

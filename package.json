@@ -5,6 +5,7 @@
   "repository": "https://github.com/mythmon/pl2-card-tracker",
   "homepage": "https://mythmon.github.io/pl2-card-tracker",
   "dependencies": {
+    "@types/react-icons": "^2.2.5",
     "@types/react-redux": "^6.0.3",
     "core-decorators": "^0.20.0",
     "gh-pages": "^1.2.0",
@@ -12,6 +13,7 @@
     "jest-immutable-matchers": "^2.0.1",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
+    "react-icons": "^2.2.7",
     "react-redux": "^5.0.7",
     "react-scripts-ts": "2.16.0",
     "redux": "^4.0.0",
