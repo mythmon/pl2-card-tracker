@@ -1,28 +1,31 @@
-import { Record, Set } from 'immutable'
+import { Record, Set } from "immutable";
 
-import { TCitiesAction } from './actions';
+import { TCitiesAction } from "./actions";
 
 export type ICitiesState = Set<City>;
 
 export interface ICity {
-    name: string,
+  name: string;
 }
 
-export class City extends Record({name: ''}) implements ICity {
-    public name: string;
+export class City extends Record({ name: "" }) implements ICity {
+  public name: string;
 
-    constructor(params: ICity) {
-        super(params)
-    }
+  constructor(params: ICity) {
+    super(params);
+  }
 }
 
-export default function reducer(state: ICitiesState = Set(), action: TCitiesAction) {
-    switch (action.type) {
-        case "CITY_ADD": {
-            const { name } = action;
-            return state.add(new City({ name }));
-        }
+export default function reducer(
+  state: ICitiesState = Set(),
+  action: TCitiesAction,
+) {
+  switch (action.type) {
+    case "CITY_ADD": {
+      const { name } = action;
+      return state.add(new City({ name }));
     }
+  }
 
-    return state;
+  return state;
 }

@@ -1,8 +1,8 @@
-import { autobind } from 'core-decorators';
-import * as React from 'react';
+import { autobind } from "core-decorators";
+import * as React from "react";
 
-import './App.css';
-import InfectionTable from './components/InfectionTable';
+import "./App.css";
+import InfectionTable from "./components/InfectionTable";
 
 @autobind
 export default class App extends React.Component<{}> {

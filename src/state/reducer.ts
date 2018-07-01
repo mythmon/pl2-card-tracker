@@ -1,16 +1,16 @@
-import { combineReducers } from 'redux';
+import { combineReducers } from "redux";
 
-import cities, { ICitiesState } from './cities/reducer';
-import infections, { IInfectionsState } from './infection/reducer';
+import cities, { ICitiesState } from "./cities/reducer";
+import infections, { IInfectionsState } from "./infection/reducer";
 
 export interface IState {
-    cities: ICitiesState;
-    infections: IInfectionsState,
+  cities: ICitiesState;
+  infections: IInfectionsState;
 }
 
 const reducer = combineReducers({
-    cities,
-    infections,
+  cities,
+  infections,
 });
 
 export default reducer;
