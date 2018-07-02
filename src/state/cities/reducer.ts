@@ -8,7 +8,7 @@ export interface ICity {
   name: string;
 }
 
-export class City extends Record({ name: "" }) implements ICity {
+export class City extends Record({ name: "" }, "City") implements ICity {
   public name: string;
 
   constructor(params: ICity) {
