@@ -3,7 +3,8 @@ import { IInitialAction } from "../actions";
 export type TInfectionAction =
   | IInitialAction
   | IInfectCityAction
-  | IEpidemicAction;
+  | IEpidemicAction
+  | IResetAction;
 
 export interface IInfectCityAction {
   type: "INFECTION_ADD";
@@ -13,6 +14,10 @@ export interface IInfectCityAction {
 export interface IEpidemicAction {
   type: "INFECTION_EPIDEMIC";
   cityName: string;
+}
+
+export interface IResetAction {
+  type: "INFECTION_RESET";
 }
 
 export function infectCity(cityName: string): IInfectCityAction {
@@ -27,4 +32,8 @@ export function epidemicInCity(cityName: string): IEpidemicAction {
     cityName,
     type: "INFECTION_EPIDEMIC",
   };
+}
+
+export function reset(): IResetAction {
+  return { type: "INFECTION_RESET" };
 }

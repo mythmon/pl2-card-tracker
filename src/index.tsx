@@ -11,7 +11,7 @@ import thunk from "redux-thunk";
 
 import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
-import { addCity } from "./state/cities/actions";
+import * as citiesActions from "./state/cities/actions";
 import { City } from "./state/cities/reducer";
 import * as citiesSelectors from "./state/cities/selectors";
 import reducer from "./state/reducer";
@@ -45,14 +45,14 @@ registerServiceWorker();
 setTimeout(() => {
   const state = store.getState();
   if (citiesSelectors.sorted(state).size === 0) {
-    store.dispatch(addCity("New York"));
-    store.dispatch(addCity("Washington"));
-    store.dispatch(addCity("Jacksonville"));
-    store.dispatch(addCity("Sao Paulo"));
-    store.dispatch(addCity("Lagos"));
-    store.dispatch(addCity("Tripoli"));
-    store.dispatch(addCity("Cairo"));
-    store.dispatch(addCity("Instanbul"));
-    store.dispatch(addCity("London"));
+    store.dispatch(citiesActions.add("New York"));
+    store.dispatch(citiesActions.add("Washington"));
+    store.dispatch(citiesActions.add("Jacksonville"));
+    store.dispatch(citiesActions.add("Sao Paulo"));
+    store.dispatch(citiesActions.add("Lagos"));
+    store.dispatch(citiesActions.add("Tripoli"));
+    store.dispatch(citiesActions.add("Cairo"));
+    store.dispatch(citiesActions.add("Instanbul"));
+    store.dispatch(citiesActions.add("London"));
   }
 }, 100);

@@ -11,7 +11,7 @@ import { City } from "../state/cities/reducer";
 import * as citiesSelectors from "../state/cities/selectors";
 import * as infectionActions from "../state/infection/actions";
 import * as infectionSelectors from "../state/infection/selectors";
-import { IState } from "../state/reducer";
+import { IAppState } from "../state/reducer";
 import { connect } from "../utils";
 import Tally from "./Tally";
 
@@ -39,7 +39,7 @@ interface IProps extends IStateProps, IDispatchProps, IOwnProps {}
 
 @autobind
 class InfectionTable extends React.Component<IProps> {
-  public static mapStateToProps(state: IState): IStateProps {
+  public static mapStateToProps(state: IAppState): IStateProps {
     return {
       cities: citiesSelectors.sorted(state),
       citiesEpidemicEnabled: infectionSelectors.cityEpidemicEnabled(state),

@@ -2,22 +2,22 @@ import { List, Map } from "immutable";
 
 import { City } from "../cities/reducer";
 import { getCitiesState } from "../cities/selectors";
-import { IState } from "../reducer";
+import { IAppState } from "../reducer";
 import { IInfectionsState } from "./reducer";
 
-export function getInfectionState(state: IState): IInfectionsState {
+export function getInfectionState(state: IAppState): IInfectionsState {
   return state.infections;
 }
 
-export function counts(state: IState): Map<string, List<number>> {
+export function counts(state: IAppState): Map<string, List<number>> {
   return getInfectionState(state).counts;
 }
 
-export function phase(state: IState): number {
+export function phase(state: IAppState): number {
   return getInfectionState(state).phase;
 }
 
-export function cityInfectionEnabled(state: IState): Map<string, boolean> {
+export function cityInfectionEnabled(state: IAppState): Map<string, boolean> {
   const infectionState = getInfectionState(state);
   const citiesState = getCitiesState(state);
 
@@ -48,7 +48,7 @@ export function cityInfectionEnabled(state: IState): Map<string, boolean> {
   return rv;
 }
 
-export function cityEpidemicEnabled(state: IState): Map<string, boolean> {
+export function cityEpidemicEnabled(state: IAppState): Map<string, boolean> {
   const infectionState = getInfectionState(state);
   const citiesState = getCitiesState(state);
 

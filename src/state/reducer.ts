@@ -3,7 +3,7 @@ import { combineReducers } from "redux";
 import cities, { ICitiesState } from "./cities/reducer";
 import infections, { IInfectionsState } from "./infection/reducer";
 
-export interface IState {
+export interface IAppState {
   cities: ICitiesState;
   infections: IInfectionsState;
 }

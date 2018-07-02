@@ -7,7 +7,7 @@ export interface IAddCityAction {
   name: string;
 }
 
-export function addCity(name: string): IAddCityAction {
+export function add(name: string): IAddCityAction {
   return {
     name,
     type: "CITY_ADD",

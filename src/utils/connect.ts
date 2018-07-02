@@ -5,10 +5,10 @@ import {
   MapStateToPropsParam,
 } from "react-redux";
 
-import { IState } from "../state/reducer";
+import { IAppState } from "../state/reducer";
 
 export interface IConnectable<TStateProps, TDispatchProps, TOwnProps> {
-  mapStateToProps: MapStateToPropsParam<TStateProps, TOwnProps, IState>;
+  mapStateToProps: MapStateToPropsParam<TStateProps, TOwnProps, IAppState>;
   mapDispatchToProps: MapDispatchToPropsParam<TDispatchProps, TOwnProps>;
 }
 

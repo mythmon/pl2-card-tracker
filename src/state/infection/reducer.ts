@@ -17,6 +17,16 @@ export default function reducer(
   action: TAction,
 ): IInfectionsState {
   switch (action.type) {
+    case "INFECTION_RESET": {
+      return {
+        counts: state.counts.map(() => List([3, 0])) as Map<
+          string,
+          List<number>
+        >,
+        phase: 1,
+      };
+    }
+
     case "CITY_ADD": {
       const { name } = action;
       return {
