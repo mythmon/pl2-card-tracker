@@ -9,21 +9,23 @@ export function getInfectionState(state: IAppState): IInfectionsState {
   return state.infections;
 }
 
-export function counts(state: IAppState): Map<string, List<number>> {
+export function getCounts(state: IAppState): Map<string, List<number>> {
   return getInfectionState(state).counts;
 }
 
-export function phase(state: IAppState): number {
-  return getInfectionState(state).phase;
+export function getPhase(state: IAppState): number {
+  const firstCity = getInfectionState(state).counts.first();
+  return firstCity ? firstCity.size - 1 : 0;
 }
 
 export function cityInfectionEnabled(state: IAppState): Map<string, boolean> {
   const infectionState = getInfectionState(state);
   const citiesState = getCitiesState(state);
+  const phase = getPhase(state);
 
   let drawPhase: number;
   let found = false;
-  for (drawPhase = infectionState.phase - 1; drawPhase >= 0; drawPhase--) {
+  for (drawPhase = phase - 1; drawPhase >= 0; drawPhase--) {
     const hasCardsLeft =
       infectionState.counts
         .map((cs: List<number>): number => cs.get(drawPhase))
@@ -51,10 +53,11 @@ export function cityInfectionEnabled(state: IAppState): Map<string, boolean> {
 export function cityEpidemicEnabled(state: IAppState): Map<string, boolean> {
   const infectionState = getInfectionState(state);
   const citiesState = getCitiesState(state);
+  const phase: number = getPhase(state);
 
   let drawPhase: number;
   let found = false;
-  for (drawPhase = 0; drawPhase < infectionState.phase; drawPhase++) {
+  for (drawPhase = 0; drawPhase < phase; drawPhase++) {
     const hasCardsLeft =
       infectionState.counts
         .map((cs: List<number>): number => cs.get(drawPhase))

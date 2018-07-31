@@ -31,7 +31,19 @@
 
 .InfectionTable .count {
   text-align: center;
-  min-width: 30px;
+  min-width: 65px;
+}
+
+.InfectionTable .count > div {
+  display: flex;
+}
+
+.InfectionTable .count .sider {
+  flex: 0 1 25%;
+}
+
+.InfectionTable .count .tally {
+  flex: 1 0 50%;
 }
 
 .InfectionTable th.city {

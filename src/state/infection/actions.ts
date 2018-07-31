@@ -4,7 +4,8 @@ export type TInfectionAction =
   | IInitialAction
   | IInfectCityAction
   | IEpidemicAction
-  | IResetAction;
+  | IResetAction
+  | IManualAction;
 
 export interface IInfectCityAction {
   type: "INFECTION_ADD";
@@ -18,6 +19,13 @@ export interface IEpidemicAction {
 
 export interface IResetAction {
   type: "INFECTION_RESET";
+}
+
+export interface IManualAction {
+  type: "INFECTION_MANUAL";
+  cityName: string;
+  from: number;
+  to: number;
 }
 
 export function infectCity(cityName: string): IInfectCityAction {
@@ -36,4 +44,21 @@ export function epidemicInCity(cityName: string): IEpidemicAction {
 
 export function reset(): IResetAction {
   return { type: "INFECTION_RESET" };
+}
+
+export function manualMovement({
+  cityName,
+  from,
+  to,
+}: {
+  cityName: string;
+  from: number;
+  to: number;
+}): IManualAction {
+  return {
+    cityName,
+    from,
+    to,
+    type: "INFECTION_MANUAL",
+  };
 }
