@@ -7,6 +7,7 @@ import { FaBug, FaLongArrowLeft, FaLongArrowRight } from "react-icons/lib/fa";
 import { IoNuclear } from "react-icons/lib/io";
 
 import { TAction } from "../state/actions";
+import * as citiesActions from "../state/cities/actions";
 import { City } from "../state/cities/reducer";
 import * as citiesSelectors from "../state/cities/selectors";
 import * as infectionActions from "../state/infection/actions";
@@ -31,6 +32,7 @@ interface IStateProps {
 
 // Props from mapDispatchToProps
 interface IDispatchProps {
+  cityAtRisk: (cityName: string, riskFactor: boolean) => void;
   infectCity: (cityName: string) => void;
   epidemicInCity: (cityName: string) => void;
   manualInfectionMovement: (
@@ -57,6 +59,8 @@ class InfectionTable extends React.Component<IProps> {
     ownProps: IOwnProps,
   ): IDispatchProps {
     return {
+      cityAtRisk: (name: string, risk: boolean) =>
+        dispatch(citiesActions.setRisk(name, risk)),
       epidemicInCity: (name: string) =>
         dispatch(infectionActions.epidemicInCity(name)),
       infectCity: (name: string) => dispatch(infectionActions.infectCity(name)),
@@ -71,6 +75,10 @@ class InfectionTable extends React.Component<IProps> {
 
   private handleEpidemic(city: string) {
     this.props.epidemicInCity(city);
+  }
+
+  private handleRisk(city: string, risk: boolean) {
+    this.props.cityAtRisk(city, risk);
   }
 
   public render() {
@@ -103,14 +111,16 @@ class InfectionTable extends React.Component<IProps> {
             </tr>
           </thead>
           <tbody>
-            {cities.map(({ name }: City) => (
+            {cities.map(({ name, atRisk }: City) => (
               <tr key={name}>
                 <CityRowControls
                   name={name}
                   infectionEnabled={!!citiesInfectionEnabled.get(name)}
                   epidemicEnabled={!!citiesEpidemicEnabled.get(name)}
+                  isAtRisk={atRisk}
                   onInfect={this.handleInfect}
                   onEpidemic={this.handleEpidemic}
+                  onRisk={this.handleRisk}
                 />
                 {infectionCounts
                   .get(name, List<number>())
@@ -136,8 +146,10 @@ interface ICityRowControlsProps {
   name: string;
   infectionEnabled: boolean;
   epidemicEnabled: boolean;
+  isAtRisk: boolean;
   onInfect: (city: string) => void;
   onEpidemic: (city: string) => void;
+  onRisk: (city: string, atRisk: boolean) => void;
 }
 
 @autobind
@@ -152,10 +164,21 @@ class CityRowControls extends React.Component<ICityRowControlsProps> {
     onEpidemic(name);
   }
 
+  public handleRisk(event: React.ChangeEvent<HTMLInputElement>) {
+    const { name, onRisk } = this.props;
+    if (event.target.checked) {
+      onRisk(name, true);
+    } else {
+      onRisk(name, false);
+    }
+  }
+
   public render() {
-    const { name, infectionEnabled, epidemicEnabled } = this.props;
+    const { name, infectionEnabled, epidemicEnabled, isAtRisk } = this.props;
+    const risk = isAtRisk ? "risky " : "safe ";
     return (
-      <th className="city">
+      <th className={risk + "city"}>
+        <input type="checkbox" onChange={this.handleRisk} checked={isAtRisk} />
         <span className="name">{name}</span>
         <button
           className="action-btn infect"
