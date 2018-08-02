@@ -175,8 +175,9 @@ class CityRowControls extends React.Component<ICityRowControlsProps> {
 
   public render() {
     const { name, infectionEnabled, epidemicEnabled, isAtRisk } = this.props;
+    const risk = isAtRisk ? "risky " : "safe ";
     return (
-      <th className="city">
+      <th className={risk + "city"}>
         <input type="checkbox" onChange={this.handleRisk} checked={isAtRisk} />
         <span className="name">{name}</span>
         <button

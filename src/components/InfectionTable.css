@@ -52,6 +52,10 @@
   line-height: 1.4em;
 }
 
+.InfectionTable th.risky {
+  background: #ffdede;
+}
+
 .InfectionTable th.city .name {
   flex: 1 1 100%;
 }
