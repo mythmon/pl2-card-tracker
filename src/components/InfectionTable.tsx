@@ -138,6 +138,7 @@ interface ICityRowControlsProps {
   epidemicEnabled: boolean;
   onInfect: (city: string) => void;
   onEpidemic: (city: string) => void;
+  onRisk: ()
 }
 
 @autobind
@@ -152,10 +153,23 @@ class CityRowControls extends React.Component<ICityRowControlsProps> {
     onEpidemic(name);
   }
 
+  public handleRisk(event) {
+    const {name, onRisk} = this.props;
+    if (event.target.checked) {
+      onRisk(name, true);
+    } else {
+      onRisk(name, false);
+    }
+  }
+
   public render() {
-    const { name, infectionEnabled, epidemicEnabled } = this.props;
+    const { name, infectionEnabled, epidemicEnabled, isAtRisk } = this.props;
     return (
       <th className="city">
+        <input type="checkbox"
+        onChange={this.handleRisk}
+        checked={isAtRisk}
+        >
         <span className="name">{name}</span>
         <button
           className="action-btn infect"
