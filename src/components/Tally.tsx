@@ -12,7 +12,9 @@ export default class Tally extends React.Component<IProps> {
       ticks.push(null);
     }
     return (
-      <span style={{ fontFamily: "monospace" }}>{ticks.map(() => "|")}</span>
+      <span style={{ fontFamily: "monospace" }}>
+        {ticks.map(() => "\u26AB")}
+      </span>
     );
   }
 }
