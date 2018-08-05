@@ -1,4 +1,5 @@
 import * as React from "react";
+import { FaBug } from "react-icons/lib/fa";
 
 interface IProps {
   count: number;
@@ -12,7 +13,9 @@ export default class Tally extends React.Component<IProps> {
       ticks.push(null);
     }
     return (
-      <span style={{ fontFamily: "monospace" }}>{ticks.map(() => "|")}</span>
+      <span style={{ fontFamily: "monospace" }}>
+        {ticks.map((_, index) => <FaBug key={index} />)}
+      </span>
     );
   }
 }
