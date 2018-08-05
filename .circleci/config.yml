@@ -55,22 +55,14 @@ jobs:
 workflows:
   version: 2
 
-  pr:
-    filter:
-      branches:
-        exclude: master
-    jobs:
-      - test
-      - lint
-
-  master:
-    filter:
-      brancheS:
-        only: master
+  build_test_deploy:
     jobs:
       - test
       - lint
       - deploy:
+        filter:
+          branches:
+            only: master
           requires:
             - test
             - lint
