@@ -14,13 +14,7 @@ export default class Tally extends React.Component<IProps> {
     }
     return (
       <span style={{ fontFamily: "monospace" }}>
-        {ticks.map(() => (
-          <FaBug
-            key={Math.random()
-              .toString(36)
-              .substr(2, 5)}
-          />
-        ))}
+        {ticks.map((_, index) => <FaBug key={index} />)}
       </span>
     );
   }
