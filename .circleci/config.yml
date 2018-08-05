@@ -38,6 +38,7 @@ jobs:
       - *save_cache
       - run: yarn test --coverage
 
+  # This isn't used right now, due to problems with CircleCI
   deploy:
     <<: *base
     steps:
@@ -55,14 +56,7 @@ jobs:
 workflows:
   version: 2
 
-  pr:
+  build_test_deploy:
     jobs:
       - test
       - lint
-      - deploy:
-          requires:
-            - test
-            - lint
-          filter:
-            branches:
-              only: master
