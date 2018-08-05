@@ -8,16 +8,16 @@ import {
 import { IAppState } from "../state/reducer";
 
 export interface IConnectable<TStateProps, TDispatchProps, TOwnProps> {
-  mapStateToProps: MapStateToPropsParam<TStateProps, TOwnProps, IAppState>;
-  mapDispatchToProps: MapDispatchToPropsParam<TDispatchProps, TOwnProps>;
+  mapStateToProps?: MapStateToPropsParam<TStateProps, TOwnProps, IAppState>;
+  mapDispatchToProps?: MapDispatchToPropsParam<TDispatchProps, TOwnProps>;
 }
 
 export default function connect<TStateProps, TDispatchProps, TOwnProps>(
   component: ComponentType &
-    IConnectable<TStateProps, TDispatchProps, TOwnProps>,
+    IConnectable<TStateProps | void, TDispatchProps | void, TOwnProps | void>,
 ) {
   return originalConnect(
-    component.mapStateToProps,
-    component.mapDispatchToProps,
+    component.mapStateToProps || (() => undefined),
+    component.mapDispatchToProps || (() => undefined),
   )(component);
 }

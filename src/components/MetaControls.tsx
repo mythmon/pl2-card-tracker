@@ -5,14 +5,7 @@ import { Dispatch } from "redux";
 import { TAction } from "../state/actions";
 import * as citiesActions from "../state/cities/actions";
 import * as infectionActions from "../state/infection/actions";
-import { IAppState } from "../state/reducer";
 import { connect } from "../utils";
-
-// Props from external user
-interface IOwnProps {}
-
-// Props from state
-interface IStateProps {}
 
 // Props from mapDispatchToProps
 interface IDispatchProps {
@@ -20,7 +13,7 @@ interface IDispatchProps {
   addCity: (cityName: string) => void;
 }
 
-interface IProps extends IStateProps, IDispatchProps, IOwnProps {}
+type IProps = IDispatchProps;
 
 interface IState {
   cityName: string;
@@ -28,10 +21,6 @@ interface IState {
 
 @autobind
 class MetaControls extends React.Component<IProps, IState> {
-  public static mapStateToProps(state: IAppState): IStateProps {
-    return {};
-  }
-
   public static mapDispatchToProps(
     dispatch: Dispatch<TAction>,
   ): IDispatchProps {
