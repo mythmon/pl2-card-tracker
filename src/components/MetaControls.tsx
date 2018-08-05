@@ -48,7 +48,8 @@ class MetaControls extends React.Component<IProps, IState> {
     };
   }
 
-  private handleAddCity() {
+  private handleAddCity(ev: React.FormEvent) {
+    ev.preventDefault();
     const { addCity } = this.props;
     const { cityName } = this.state;
     addCity(cityName);
@@ -60,9 +61,7 @@ class MetaControls extends React.Component<IProps, IState> {
   }
 
   private handleCityNameChange(ev: React.ChangeEvent<HTMLInputElement>) {
-    if (ev.target.value) {
-      this.setState({ cityName: ev.target.value });
-    }
+    this.setState({ cityName: ev.target.value });
   }
 
   public render() {
@@ -70,12 +69,15 @@ class MetaControls extends React.Component<IProps, IState> {
 
     return (
       <div className="MetaControls">
-        <input
-          value={cityName}
-          onChange={this.handleCityNameChange}
-          placeholder="City Name"
-        />
-        <button onClick={this.handleAddCity}>Add City</button>
+        <form onSubmit={this.handleAddCity}>
+          <input
+            onChange={this.handleCityNameChange}
+            placeholder="City Name"
+            required={true}
+            value={cityName}
+          />
+          <button type="submit">Add City</button>
+        </form>
         <button onClick={this.handleResetInfections}>Reset Infections</button>
       </div>
     );
