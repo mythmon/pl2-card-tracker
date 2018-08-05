@@ -58,24 +58,7 @@ workflows:
   pr:
     jobs:
       - test:
-          filter:
-            branches:
-              ignore: master
       - lint:
-          filter:
-            branches:
-              ignore: master
-
-  master:
-    jobs:
-      - test:
-          filter:
-            branches:
-              only: master
-      - lint:
-          filter:
-            branches:
-              only: master
       - deploy:
           requires:
             - test
