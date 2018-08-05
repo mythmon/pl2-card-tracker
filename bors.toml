@@ -1,0 +1,3 @@
+status = ["ci/circleci: test", "ci/circleci: lint"]
+block_labels = ["bors-dont-merge"]
+delete_merged_branches = true
