@@ -38,31 +38,10 @@ jobs:
       - *save_cache
       - run: yarn test --coverage
 
-  deploy:
-    <<: *base
-    steps:
-      - checkout
-      - *restore_cache
-      - run: yarn install
-      - *save_cache
-      - run:
-          name: Deploy
-          command: |
-            git config --global user.email "automation@electricgrey.com"
-            git config --global user.name "Automated Deploy"
-            yarn deploy
-
 workflows:
   version: 2
 
-  build_test_deploy:
+  build_test:
     jobs:
       - test
       - lint
-      - deploy:
-        filter:
-          branches:
-            only: master
-          requires:
-            - test
-            - lint
