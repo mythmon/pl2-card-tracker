@@ -57,11 +57,11 @@ workflows:
 
   pr:
     jobs:
-      - test
+      - test:
           filter:
             branches:
               ignore: master
-      - lint
+      - lint:
           filter:
             branches:
               ignore: master
