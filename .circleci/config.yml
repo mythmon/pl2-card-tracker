@@ -1,0 +1,76 @@
+version: 2
+
+shared:
+  base: &base
+    docker:
+      - image: circleci/node:10
+
+    working_directory: ~/repo
+
+  save_cache: &save_cache
+    save_cache:
+      paths:
+        - ~/.cache/yarn
+      key: yarn-packages-v1-{{ checksum "yarn.lock" }}
+
+  restore_cache: &restore_cache
+    restore_cache:
+      keys:
+        - yarn-packages-{{ checksum "yarn.lock" }}
+        - yarn-packages-
+
+jobs:
+  lint:
+    <<: *base
+    steps:
+      - checkout
+      - *restore_cache
+      - run: yarn install
+      - *save_cache
+      - run: yarn lint
+
+  test:
+    <<: *base
+    steps:
+      - checkout
+      - *restore_cache
+      - run: yarn install
+      - *save_cache
+      - run: yarn test --coverage
+
+  deploy:
+    <<: *base
+    steps:
+      - checkout
+      - *restore_cache
+      - run: yarn install
+      - *save_cache
+      - run:
+          name: Deploy
+          command: |
+            git config --global user.email "automation@electricgrey.com"
+            git config --global user.name "Automated Deploy"
+            yarn deploy
+
+workflows:
+  version: 2
+
+  pr:
+    filter:
+      branches:
+        exclude: master
+    jobs:
+      - test
+      - lint
+
+  master:
+    filter:
+      brancheS:
+        only: master
+    jobs:
+      - test
+      - lint
+      - deploy:
+          requires:
+            - test
+            - lint
