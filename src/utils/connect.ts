@@ -1,9 +1,10 @@
-import { ComponentType } from "react";
+import { ComponentClass, ComponentType } from "react";
 import {
   connect as originalConnect,
   MapDispatchToPropsParam,
   MapStateToPropsParam,
 } from "react-redux";
+import { Store } from "redux";
 
 import { IAppState } from "../state/reducer";
 
@@ -14,10 +15,12 @@ export interface IConnectable<TStateProps, TDispatchProps, TOwnProps> {
 
 export default function connect<TStateProps, TDispatchProps, TOwnProps>(
   component: ComponentType &
-    IConnectable<TStateProps | void, TDispatchProps | void, TOwnProps | void>,
-) {
+    IConnectable<TStateProps, TDispatchProps, TOwnProps>,
+): ComponentClass<Pick<{}, never> & TOwnProps & { store?: Store }> & {
+  WrappedComponent: ComponentType<{}>;
+} {
   return originalConnect(
-    component.mapStateToProps || (() => undefined),
-    component.mapDispatchToProps || (() => undefined),
+    component.mapStateToProps || (() => ({})),
+    component.mapDispatchToProps || (() => ({})),
   )(component);
 }
