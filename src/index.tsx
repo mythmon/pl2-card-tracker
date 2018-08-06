@@ -48,7 +48,7 @@ setTimeout(() => {
     store.dispatch(citiesActions.add("New York"));
     store.dispatch(citiesActions.add("Washington"));
     store.dispatch(citiesActions.add("Jacksonville"));
-    store.dispatch(citiesActions.add("Sao Paulo"));
+    store.dispatch(citiesActions.add("São Paulo"));
     store.dispatch(citiesActions.add("Lagos"));
     store.dispatch(citiesActions.add("Tripoli"));
     store.dispatch(citiesActions.add("Cairo"));

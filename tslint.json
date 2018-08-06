@@ -10,11 +10,8 @@
   },
   "rules": {
     "prettier": true,
-    "no-empty": false,
-    "no-empty-interface": false,
     "member-ordering": false,
     "no-console": false,
-    "no-submodule-imports": false,
-    "max-classes-per-file": false
+    "no-submodule-imports": false
   }
 }
