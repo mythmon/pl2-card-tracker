@@ -60,3 +60,10 @@ workflows:
     jobs:
       - test
       - lint
+      - deploy:
+          requires:
+            - test
+            - lint
+          filters:
+            branches:
+              only: master 
