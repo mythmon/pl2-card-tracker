@@ -61,11 +61,11 @@ workflows:
       - test:
           filter:
             branches:
-              only: /*/
+              only: /.*/
       - lint:
           filter:
             branches:
-              only: /*/
+              only: /.*/
       - deploy:
           requires:
             - test
