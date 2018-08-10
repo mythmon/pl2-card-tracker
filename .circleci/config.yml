@@ -59,17 +59,17 @@ workflows:
   build_test_deploy:
     jobs:
       - test:
-          filter:
+          filters:
             branches:
               only: /.*/
       - lint:
-          filter:
+          filters:
             branches:
               only: /.*/
       - deploy:
           requires:
             - test
             - lint
-          filter:
+          filters:
             branches:
               only: master 
